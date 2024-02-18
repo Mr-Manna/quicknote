@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@mdxeditor/editor": "^2.9.0",
-    "@uiw/react-md-editor": "^3.6.0",
     "@wysimark/react": "^3.0.20",
     "airtable": "^0.12.2",
     "next": "14.1.0",

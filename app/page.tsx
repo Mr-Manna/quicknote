@@ -19,17 +19,6 @@ const roboto_mono = Roboto_Mono({
   display: 'swap',
 })
 
-function makeid(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
 
 const EditorComp = dynamic(() => import('./EditorComponent'), { ssr: false })
 
@@ -42,7 +31,6 @@ export default function Home() {
   **Delete this text and start writing here.**
  `)
 
- console.log(makeid(7));
 
   const handleSave = ()=>{
     base('Table 1').create({
@@ -80,9 +68,9 @@ export default function Home() {
         <span onClick={()=>handleSave()}>
           <svg className="svg" viewBox="0 0 24 24"><path d="M21 20V8.414a1 1 0 0 0-.293-.707l-4.414-4.414A1 1 0 0 0 15.586 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1zM9 8h4a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2zm7 11H8v-4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
         </span>
-        <span>
+        <span hidden={true}>
           <svg className="svg" viewBox="0 0 24 24"><path d="M21 10v10a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1h10a1 1 0  1 1 1zM6 14H5V5h9v1a1 1 0 0 0 2 0V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h2a1 1 0 0 0 0-2z"/></svg>
-          </span>
+        </span>
         <span hidden={true}>
           <svg className="svg" viewBox="0 0 24 24"><path d="M12,22a7,7,0,0,0,5-11.894V7A5,5,0,0,0,7,7v3.106A7,7,0,0,0,12,22Zm1-6.277V18a1,1,0,0,1-2,0V15.723a2,2,0,1,1,2,0ZM9,7a3,3,0,0,1,6,0V8.683a6.93,6.93,0,0,0-6,0Z"/></svg>
           </span>
