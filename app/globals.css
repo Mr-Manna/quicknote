@@ -92,6 +92,9 @@
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
+  footer{
+    padding: 2rem 0;
+  }
   .footer_div{
     display: flex;
     margin: 2em;
