@@ -101,6 +101,10 @@
     flex-wrap: wrap;
     gap: 1em;
   }
+  .css-1rcsakw{
+    left: 0 !important;
+    right: 20px !important;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
