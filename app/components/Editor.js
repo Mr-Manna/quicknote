@@ -3,10 +3,9 @@
 import { Editable, useEditor } from "@wysimark/react"
 import { useState } from "react"
 
-const Editor = () => {
-  const [markdown, setMarkdown] = useState("# Hello World")
+const Editor = ({text, handleChange}) => {
   const editor = useEditor({ authToken: false })
-  return <Editable editor={editor} value={markdown} onChange={setMarkdown} />
+  return <Editable editor={editor} value={text} onChange={handleChange} />
 }
 
 export default Editor

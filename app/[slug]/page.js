@@ -8,6 +8,8 @@ import React from "react"
 import styles from './page.module.css'
 import { Roboto_Mono } from "next/font/google";
 import Footer from '../components/Footer.js'
+import Editor from '../components/Editor.js'
+
 var Airtable = require('airtable');
 
 Airtable.configure({
@@ -20,17 +22,7 @@ const roboto_mono = Roboto_Mono({
   display: 'swap',
 })
 
-function makeid(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  let counter = 0;
-  while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    counter += 1;
-  }
-  return result;
-}
+
 
 const EditorComp = dynamic(() => import('../EditorComponent'), { ssr: false })
 
@@ -38,6 +30,7 @@ const EditorComp = dynamic(() => import('../EditorComponent'), { ssr: false })
 
 export default function Page({params}) {
 
+  let [loading, setLoading] = React.useState(false)
   let [text, setText] = React.useState(`
   **Delete this text and start writing here.**
  `)
@@ -52,6 +45,7 @@ export default function Page({params}) {
   base('Table 1').find(params.slug, function(err, record) {
     if (err) { console.error(err); return; }
     setText(record?.fields?.Note)
+    setLoading(false)
   });
 
  },[params])
@@ -64,6 +58,7 @@ export default function Page({params}) {
  },[saved,linkCopied])
 
   const handleSave = ()=>{
+    setLoading(true)
     base('Table 1').replace(id,
      {
           "Note" : text,
@@ -73,6 +68,7 @@ export default function Page({params}) {
         console.error(err);
         return;
       }
+      setLoading(false)
       setSaved('Saved')
     });
   }
@@ -97,26 +93,29 @@ export default function Page({params}) {
 
   return (
     <>
-
+    <div className="loading" style={{ display: loading ? 'grid' :  'none !important'}}>    
+      <span> Please Wait ...</span>
+    </div>
     <div className={styles.app_grid}>
       <aside className={styles.aside_left}>
       <a href="/"><h1 className={styles.heading + ' ' + roboto_mono.className}>QUICK NOTE</h1></a> 
       </aside>
       <main className={styles.main}> 
-      <Suspense fallback={null}>
+      {/* <Suspense fallback={null}>
         <EditorComp markdown={text} onChange={handleChange}/>
         <input type="hidden" value={id} id="myInput"/>
-      </Suspense>
+      </Suspense> */}
+      <Editor text={text} handleChange={handleChange}/>
       </main>
       <aside className={styles.aside_right}>
         <div className={styles.right_aside_div}>
-          <span onClick={()=>handleSave()}>
+          <span onClick={()=>handleSave()} title="Save Document">
             <svg className="svg" viewBox="0 0 24 24"><path d="M21 20V8.414a1 1 0 0 0-.293-.707l-4.414-4.414A1 1 0 0 0 15.586 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1zM9 8h4a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2zm7 11H8v-4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
           </span>
           <p>{saved}</p>
         </div>
-        <div className={styles.right_aside_div}>
-          <span onClick={()=>handleCopy()}>
+        <div className={styles.right_aside_div} >
+          <span onClick={()=>handleCopy()} title="Copy Document Link">
             <svg className="svg" viewBox="0 0 24 24"><path d="M21 10v10a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1zM6 14H5V5h9v1a1 1 0 0 0 2 0V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h2a1 1 0 0 0 0-2z"/></svg>
           </span>
           <p>{linkCopied}</p>

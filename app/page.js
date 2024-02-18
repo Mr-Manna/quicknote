@@ -1,7 +1,5 @@
 'use client'
-import Image from 'next/image'
-import dynamic from 'next/dynamic'
-import { Suspense } from 'react'
+
 import React from "react"
 import styles from './page.module.css'
 import { Roboto_Mono } from "next/font/google";
@@ -9,34 +7,36 @@ import Footer from './components/Footer.js'
 var Airtable = require('airtable');
 import { useRouter } from 'next/navigation'
 
+import Editor from './components/Editor.js'
+
 Airtable.configure({
     endpointUrl: 'https://api.airtable.com',
     apiKey: process.env.NEXT_PUBLIC_AIRTABLE
 });
+
 var base = Airtable.base('app8zMGpnIHI1LLDi');
+
 const roboto_mono = Roboto_Mono({
   subsets: ['latin'],
   display: 'swap',
 })
 
-
-const EditorComp = dynamic(() => import('./EditorComponent'), { ssr: false })
-
-// const markdown = 
-
 export default function Home() {
   const router = useRouter()
 
   let [text, setText] = React.useState(`
-  **Delete this text and start writing here.**
+  Start typing here...
  `)
+
+  let [loading, setLoading] = React.useState(false)
 
 
   const handleSave = ()=>{
+    setLoading(true)
     base('Table 1').create({
         "Note" : text,
       }, 
-       function(err: any, record: any) {
+       function(err, record) {
         if (err) {
           console.error(err);
           return;
@@ -44,28 +44,30 @@ export default function Home() {
         let id = record.getId();
 
         router.push(`/${id}`)
+        setLoading(false)
+
     });
   }
 
-  const handleChange = (value: any) =>{
+  const handleChange = (value) =>{
     setText(value)    
   }
 
 
   return (
     <>
-
+    <div className="loading" style={{ display: loading ? 'grid' :  'none !important'}}>    
+      <span> Please Wait ...</span>
+    </div>
     <div className={styles.app_grid}>
       <aside className={styles.aside_left}>
        <a href="/"><h1 className={styles.heading + ' ' + roboto_mono.className}>QUICK NOTE</h1></a> 
       </aside>
       <main className={styles.main}> 
-      <Suspense fallback={null}>
-        <EditorComp markdown={text} onChange={handleChange}/>
-      </Suspense>
+      <Editor text={text} handleChange={handleChange}/>
       </main>
       <aside className={styles.aside_right}>
-        <span onClick={()=>handleSave()}>
+        <span onClick={()=>handleSave()} title="Save Document">
           <svg className="svg" viewBox="0 0 24 24"><path d="M21 20V8.414a1 1 0 0 0-.293-.707l-4.414-4.414A1 1 0 0 0 15.586 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1zM9 8h4a1 1 0 0 1 0 2H9a1 1 0 0 1 0-2zm7 11H8v-4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
         </span>
         <span hidden={true}>
@@ -83,8 +85,7 @@ export default function Home() {
       </aside>
     </div>
     <Footer />
+
     </>
   )
 }
-
-EditorComp.displayName = 'EditorComp'
