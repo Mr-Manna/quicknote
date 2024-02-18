@@ -47,7 +47,7 @@ export default function Home() {
     });
   }
 
-  const handleChange = (value) =>{
+  const handleChange = (value: any) =>{
     setText(value)    
   }
 
