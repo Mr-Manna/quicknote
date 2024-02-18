@@ -45,10 +45,10 @@ export default function Page({params}) {
   base('Table 1').find(params.slug, function(err, record) {
     if (err) { console.error(err); return; }
     setText(record?.fields?.Note)
-    setLoading(false)
+    // setLoading(false)
   });
 
- },[params])
+ },[params?.slug])
 
  React.useEffect(()=>{
   setTimeout(()=>{
@@ -86,16 +86,20 @@ export default function Page({params}) {
     // copyText.setSelectionRange(0, 99999); // For mobile devices
   
      // Copy the text inside the text field
-    navigator.clipboard.writeText(location + id);
+    navigator.clipboard.writeText(location + '/' + id);
     setLinkCopied('Link Copied')    
   }
 
 
+  if(loading){
+    return (
+      <div className="loading" style={{ display: loading ? 'grid' :  'none !important'}}>    
+        <span> Please Wait ...</span>
+      </div>
+    )
+  }
   return (
     <>
-    <div className="loading" style={{ display: loading ? 'grid' :  'none !important'}}>    
-      <span> Please Wait ...</span>
-    </div>
     <div className={styles.app_grid}>
       <aside className={styles.aside_left}>
       <a href="/"><h1 className={styles.heading + ' ' + roboto_mono.className}>QUICK NOTE</h1></a> 
@@ -136,4 +140,4 @@ export default function Page({params}) {
   )
 }
 
-EditorComp.displayName = 'EditorComp'
+// EditorComp.displayName = 'EditorComp'

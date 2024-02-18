@@ -64,4 +64,9 @@
     rotate: 0deg;
     color: #A7A8CD;
   }
+
+  .aside_right{
+    display: flex;
+    justify-content: space-evenly;
+  }
 }
