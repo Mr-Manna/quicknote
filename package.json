@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.29.0",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/warning": "^1.4.0",
     "@mdxeditor/editor": "^2.9.0",
     "@wysimark/react": "^3.0.20",
     "airtable": "^0.12.2",

@@ -24,16 +24,14 @@ const roboto_mono = Roboto_Mono({
 
 
 
-const EditorComp = dynamic(() => import('../EditorComponent'), { ssr: false })
+// const EditorComp = dynamic(() => import('../EditorComponent'), { ssr: false })
 
 // const markdown = 
 
 export default function Page({params}) {
 
   let [loading, setLoading] = React.useState(false)
-  let [text, setText] = React.useState(`
-  **Delete this text and start writing here.**
- `)
+  let [text, setText] = React.useState('')
   let [saved, setSaved] = React.useState('Saved')
   let [linkCopied, setLinkCopied] = React.useState('')
   let [location, setLocation] = React.useState(process.env.NEXT_PUBLIC_URL)
@@ -41,11 +39,11 @@ export default function Page({params}) {
 
  React.useEffect(()=>{
   setid(params.slug)
-
+  setLoading(true)
   base('Table 1').find(params.slug, function(err, record) {
     if (err) { console.error(err); return; }
     setText(record?.fields?.Note)
-    // setLoading(false)
+    setLoading(false)
   });
 
  },[params?.slug])

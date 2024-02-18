@@ -3,19 +3,27 @@
 import { useEffect } from "react"
 import { Editable, useEditor } from "@wysimark/react"
 import { useState } from "react"
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header'; 
+// import List from '@editorjs/list'; 
+import Warning from '@editorjs/warning';
+
 export default function Note(){
     useEffect(()=>{
-        if ('speechSynthesis' in window) {
-            // Speech Synthesis is supported 🎉
-            console.log('speech');
-           }else{
-             // Speech Synthesis is not Supported 😞 
-             console.log('no speech');
-           }
+      const editor = new EditorJS({
+        /**
+         * Id of Element that should contain Editor instance
+         */
+        autofocus: true,
+        holder: 'editorjs',
+        tools: { 
+          header: Header, 
+          warning: Warning, 
+        }, 
+      });
     })
-    const [markdown, setMarkdown] = useState("# Hello World")
-    const editor = useEditor({ authToken: false })
+
     return<>
-      <Editable editor={editor} value={markdown} onChange={setMarkdown} />
+      <div id="editorjs"> </div>
     </>    
 }
