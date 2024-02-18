@@ -43,7 +43,7 @@ export default function Page({params}) {
  `)
   let [saved, setSaved] = React.useState('Saved')
   let [linkCopied, setLinkCopied] = React.useState('')
-  let [location, setLocation] = React.useState('http://localhost:3000/')
+  let [location, setLocation] = React.useState(process.env.NEXT_PUBLIC_URL)
   let [id, setid] = React.useState('')
 
  React.useEffect(()=>{
