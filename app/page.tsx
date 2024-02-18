@@ -36,7 +36,7 @@ export default function Home() {
     base('Table 1').create({
         "Note" : text,
       }, 
-       function(err, record) {
+       function(err: any, record: any) {
         if (err) {
           console.error(err);
           return;
