@@ -18,17 +18,26 @@
   place-content: center;
 }
 
-  .heading{
-    font-size: 1.2em;
-    letter-spacing: 20px;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    rotate: 180deg;
-    color: #A7A8CD;
-  }
+.heading{
+  font-size: 1.2em;
+  letter-spacing: 20px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  rotate: 180deg;
+  color: #A7A8CD;
+}
+
 .aside_right{
   display: grid;
   place-content: center;
   row-gap: 2em;
+  color: #A7A8CD;
+
 }
 
+.right_aside_div{
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+
+}
