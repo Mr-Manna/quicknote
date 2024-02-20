@@ -13,9 +13,10 @@
     "@editorjs/header": "^2.8.1",
     "@editorjs/warning": "^1.4.0",
     "@mdxeditor/editor": "^2.9.0",
+    "@next/third-parties": "^14.1.0",
     "@wysimark/react": "^3.0.20",
     "airtable": "^0.12.2",
-    "next": "14.1.0",
+    "next": "^14.1.0",
     "next-remove-imports": "^1.0.12",
     "react": "^18",
     "react-dom": "^18"
